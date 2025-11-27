@@ -82,9 +82,16 @@
         and how to start building skills from day one.
     </p>
 
+<strong>About Speakers</strong>
     <p>
-        Speaker: <strong>Nishma N J</strong>  
+        Speaker 1: <strong>Nishma N J</strong>  
         <br>Module Lead | Firmware & Embedded Systems  
+        <br>Date: <strong>1st December 2025</strong>
+    </p>
+
+    <p>
+        Speaker 2: <strong>Manu Devappa</strong>  
+        <br>Senior Firmware Engineer | Firmware & Embedded Systems  
         <br>Date: <strong>1st December 2025</strong>
     </p>
 
@@ -100,28 +107,26 @@
     <div id="comments"></div>
 </div>
 
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+<!-- Firebase SDK (Compat mode for v8 syntax) -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 
 <script>
-// --------------------------------------
-// 🔧 Replace this with YOUR Firebase config
-// --------------------------------------
 const firebaseConfig = {
-  apiKey: "YOUR_KEY",
-  authDomain: "YOUR_DOMAIN",
-  databaseURL: "YOUR_DB_URL",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_BUCKET",
-  messagingSenderId: "YOUR_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyCoftkFQbJkbNsIVO9xK-V53I-5lmXS-dg",
+  authDomain: "innowave-feedback.firebaseapp.com",
+  databaseURL: "https://innowave-feedback-default-rtdb.firebaseio.com/",
+  projectId: "innowave-feedback",
+  storageBucket: "innowave-feedback.firebasestorage.app",
+  messagingSenderId: "841020171244",
+  appId: "1:841020171244:web:1fce162b2f9c87ed43d6c9",
+  measurementId: "G-9JH49Y812K"
 };
 
-// --------------------------------------
-const app = firebase.initializeApp(firebaseConfig);
+// Initialize Firebase (v8 style)
+firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
-// --------------------------------------
+
 
 function submitFeedback() {
     let name = document.getElementById("name").value;
