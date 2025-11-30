@@ -115,83 +115,92 @@ Save this file as `innowave_master_class_profile.html` and open in a browser.
     <footer style="margin-top:18px;color:var(--muted);font-size:13px">Made with ♥ for Innowave • Edit this file to add real links and images.</footer>
   </div>
 </body>
-
 <!-- Feedback Section Added -->
-<!-- BEGIN FEEDBACK HTML + FIREBASE -->
+<p style="text-align:center; color:#b9c6d2; font-size:15px; margin-bottom:24px;">Your thoughts help us improve future sessions for students and professionals.</p>
 
-<!-- ================= FEEDBACK SECTION ================== -->
-<section class="container" style="margin-top:40px;">
-    <h2>Session Feedback</h2>
-    <p>Share your thoughts about today's Masterclass. Your feedback helps us improve future sessions!</p>
 
-    <input id="name" placeholder="Your Name (optional)">
-    <textarea id="feedback" placeholder="Write your feedback here..."></textarea>
-    <button onclick="submitFeedback()">Submit</button>
-    <p id="status"></p>
+<div style="display:flex; flex-direction:column; gap:14px;">
+<input id="name" placeholder="Your Name (Optional)" style="background:#0b1220; color:#e6eef6; padding:14px; border-radius:10px; border:1px solid #1e293b; font-size:15px;">
+<textarea id="feedback" placeholder="Write your feedback here..." style="background:#0b1220; color:#e6eef6; padding:16px; border-radius:10px; border:1px solid #1e293b; font-size:15px; min-height:120px;"></textarea>
+<button onclick="submitFeedback()" style="padding:14px; background:#6ee7b7; color:#000; font-weight:700; border:none; border-radius:10px; font-size:16px; cursor:pointer;">Submit Feedback</button>
+<p id="status" style="text-align:center; margin-top:8px; color:#6ee7b7; font-weight:600;"></p>
+</div>
 
-    <h3 style="margin-top:30px;">All Comments</h3>
-    <div id="comments"></div>
+
+<h3 style="margin-top:32px; font-size:20px; font-weight:600; text-align:center;">Recent Comments</h3>
+<div id="comments" style="margin-top:16px; display:flex; flex-direction:column; gap:12px;"></div>
 </section>
+
 
 <!-- Firebase SDK and Script -->
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyCoftkFQbJkbNsIVO9xK-V53I-5lmXS-dg",
-        authDomain: "innowave-feedback.firebaseapp.com",
-        projectId: "innowave-feedback",
-        storageBucket: "innowave-feedback.firebasestorage.app",
-        messagingSenderId: "841020171244",
-        appId: "1:841020171244:web:1fce162b2f9c87ed43d6c9",
-        measurementId: "G-9JH49Y812K"
-    };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+const firebaseConfig = {
+apiKey: "AIzaSyCoftkFQbJkbNsIVO9xK-V53I-5lmXS-dg",
+authDomain: "innowave-feedback.firebaseapp.com",
+projectId: "innowave-feedback",
+storageBucket: "innowave-feedback.firebasestorage.app",
+messagingSenderId: "841020171244",
+appId: "1:841020171244:web:1fce162b2f9c87ed43d6c9",
+measurementId: "G-9JH49Y812K"
+};
 
-    window.submitFeedback = async function () {
-        const name = document.getElementById("name").value.trim() || "Anonymous";
-        const feedback = document.getElementById("feedback").value.trim();
 
-        if (!feedback) {
-            document.getElementById("status").innerHTML = "Please enter feedback!";
-            return;
-        }
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-        try {
-            await addDoc(collection(db, "feedbacks"), {
-                name,
-                feedback,
-                time: new Date()
-            });
 
-            document.getElementById("status").innerHTML = "Thank you! Feedback submitted ✔";
-            document.getElementById("feedback").value = "";
-        } catch (error) {
-            console.error(error);
-            document.getElementById("status").innerHTML = "Error submitting feedback ❌";
-        }
-    };
+window.submitFeedback = async function () {
+const name = document.getElementById("name").value.trim() || "Anonymous";
+const feedback = document.getElementById("feedback").value.trim();
 
-    const q = query(collection(db, "feedbacks"), orderBy("time", "desc"));
-    onSnapshot(q, (snapshot) => {
-        const commentsDiv = document.getElementById("comments");
-        commentsDiv.innerHTML = "";
 
-        snapshot.forEach(doc => {
-            const data = doc.data();
-            commentsDiv.innerHTML += `
-                <div class="comment">
-                    <div class="name">${data.name}</div>
-                    <div>${data.feedback}</div>
-                    <div class="time">${new Date(data.time.seconds * 1000).toLocaleString()}</div>
-                </div>`;
-        });
-    });
+if (!feedback) {
+document.getElementById("status").innerHTML = "Please enter feedback!";
+return;
+}
+
+
+try {
+await addDoc(collection(db, "feedbacks"), {
+name,
+feedback,
+time: new Date()
+});
+
+
+document.getElementById("status").innerHTML = "Thank you! Feedback submitted ✔";
+document.getElementById("feedback").value = "";
+} catch (error) {
+console.error(error);
+document.getElementById("status").innerHTML = "Error submitting feedback ❌";
+}
+};
+
+
+const q = query(collection(db, "feedbacks"), orderBy("time", "desc"));
+onSnapshot(q, (snapshot) => {
+const commentsDiv = document.getElementById("comments");
+commentsDiv.innerHTML = "";
+
+
+snapshot.forEach(doc => {
+const data = doc.data();
+commentsDiv.innerHTML += `
+<div class="comment">
+<div class="name">${data.name}</div>
+<div>${data.feedback}</div>
+<div class="time">${new Date(data.time.seconds * 1000).toLocaleString()}</div>
+</div>`;
+});
+});
 </script>
 
+
 <!-- END FEEDBACK SECTION -->
+
 
 </html>
